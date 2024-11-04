@@ -15,4 +15,20 @@ public class ListNode {
         this.val = val;
         this.next = next;
     }
+
+    public void append(int val) {
+        ListNode node = new ListNode(val);
+
+        if (this.next == null) {
+            this.next = node;
+            return;
+        }
+
+        ListNode last = this.next;
+        while (last.next != null) {
+            last = last.next;
+        }
+
+        last.next = node;
+    }
 }

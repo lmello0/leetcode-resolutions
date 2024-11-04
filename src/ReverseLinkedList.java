@@ -1,7 +1,7 @@
 import utils.ListNode;
 
 public class ReverseLinkedList {
-    public ListNode reverseList(ListNode head) {
+    public static ListNode reverseList(ListNode head) {
         ListNode newList = null;
 
         while (head != null) {
@@ -16,6 +16,11 @@ public class ReverseLinkedList {
     }
 
     public static void main(String[] args) {
+        ListNode list = new ListNode(1);
 
+        list.next = new ListNode(2);
+        list.next.next = new ListNode(3);
+
+        reverseList(list);
     }
 }
