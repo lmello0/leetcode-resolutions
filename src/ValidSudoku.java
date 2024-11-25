@@ -1,13 +1,16 @@
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
 
 public class ValidSudoku {
     public static boolean isValidSudoku(char[][] board) {
-        Map<Integer, Set<Character>> cols = new HashMap<>();
-        Map<Integer, Set<Character>> rows = new HashMap<>();
-        Map<Integer, Set<Character>> squares = new HashMap<>();
+        HashSet<Character>[] cols = new HashSet[9];
+        HashSet<Character>[] rows = new HashSet[9];
+        HashSet<Character>[] squares = new HashSet[9];
+
+        for (int i = 0; i < 9; i++) {
+            rows[i] = new HashSet<>();
+            cols[i] = new HashSet<>();
+            squares[i] = new HashSet<>();
+        }
 
         for (int row = 0; row < 9; row++) {
             for (int column = 0; column < 9; column++) {
@@ -17,22 +20,15 @@ public class ValidSudoku {
                     continue;
                 }
 
-                if (rows.getOrDefault(row, new HashSet<>()).contains(cell)) {
+                 int squareIndex = (row / 3) * 3 + (column / 3);
+
+                if (rows[row].contains(cell) || cols[column].contains(cell) || squares[squareIndex].contains(cell)) {
                     return false;
                 }
 
-                if (cols.getOrDefault(column, new HashSet<>()).contains(cell)) {
-                    return false;
-                }
-
-                int squareKey = (row / 3) * 3 + column / 3;
-                if (squares.getOrDefault(squareKey, new HashSet<>()).contains(cell)) {
-                    return false;
-                }
-
-                cols.computeIfAbsent(column, k -> new HashSet<>()).add(cell);
-                rows.computeIfAbsent(row, k -> new HashSet<>()).add(cell);
-                squares.computeIfAbsent(squareKey, k -> new HashSet<>()).add(cell);
+                rows[row].add(cell);
+                cols[column].add(cell);
+                squares[squareIndex].add(cell);
             }
         }
 
