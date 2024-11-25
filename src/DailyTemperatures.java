@@ -1,26 +1,27 @@
+import java.util.Arrays;
 import java.util.Stack;
 
 public class DailyTemperatures {
     public static int[] dailyTemperatures(int[] temperatures) {
         int[] res = new int[temperatures.length];
-        Stack<int[]> stack = new Stack<>();
+        Stack<Integer> stack = new Stack<>();
 
         for (int i = 0; i < temperatures.length; i++) {
             int t = temperatures[i];
 
-            while (!stack.isEmpty() && t > stack.peek()[0]) {
-                int[] pair = stack.pop();
-                res[pair[1]] = i - pair[1];
+            while (!stack.isEmpty() && t > stack.peek()) {
+                int index = stack.pop();
+                res[index] = i - index;
             }
 
-            stack.push(new int[]{t, i});
+            stack.push(i);
         }
 
         return res;
     }
 
     public static void main(String[] args) {
-        dailyTemperatures(new int[]{30,40,50,60});
+        System.out.println(Arrays.toString(dailyTemperatures(new int[]{30, 40, 50, 60})));
     }
 }
 
