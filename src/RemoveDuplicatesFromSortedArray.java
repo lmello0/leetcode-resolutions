@@ -1,39 +1,23 @@
 public class RemoveDuplicatesFromSortedArray {
     public static int removeDuplicates(int[] nums) {
+        int res = 1;
         int prev = nums[0];
-        int countNegative1 = 0;
         for (int i = 1; i < nums.length; i++) {
-            if (nums[i] == Integer.MIN_VALUE) {
-                break;
+            if (nums[i] == prev) {
+                continue;
             }
 
-            if (prev == nums[i]) {
-                int behind = i;
-                int next = i + 1;
+            nums[res] = nums[i];
 
-                nums[i] = Integer.MIN_VALUE;
-                countNegative1++;
-                while (next < nums.length) {
-                    int tmp = nums[behind];
-
-                    nums[behind] = nums[next];
-                    nums[next] = tmp;
-
-                    next++;
-                    behind++;
-                }
-
-                i--;
-            }
-
+            res++;
             prev = nums[i];
         }
 
-        return nums.length - countNegative1;
+        return res;
     }
 
     public static void main(String[] args) {
-        int[] arr = new int[]{-3,-1,0,0,0,3,3};
+        int[] arr = new int[]{0,0,1,1,1,2,2,3,3,4};
 
         int k = removeDuplicates(arr);
 
