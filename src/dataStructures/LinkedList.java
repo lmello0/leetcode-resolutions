@@ -85,14 +85,14 @@ public class LinkedList<T> {
     public static void main(String[] args) {
         LinkedList<String> list = new LinkedList<>();
 
-        list.add("Lucas");
-        list.add("Mello");
-        list.add("dos");
-        list.add("Santos");
+        list.add("a");
+        list.add("b");
+        list.add("c");
+        list.add("d");
 
         list.traverse();
 
-        list.remove("Mello");
+        list.remove("c");
 
         list.traverse();
     }

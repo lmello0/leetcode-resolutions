@@ -1,5 +1,3 @@
-import java.util.Arrays;
-
 public class ContainerWithMostWater {
     public static int maxArea(int[] heights) {
         int left = 0;
@@ -25,6 +23,6 @@ public class ContainerWithMostWater {
     }
 
     public static void main(String[] args) {
-        System.out.println(maxArea(new int[]{1,1}));
+        System.out.println(maxArea(new int[]{1,8,6,2,5,4,8,3,7}));
     }
 }

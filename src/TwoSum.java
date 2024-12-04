@@ -1,25 +1,28 @@
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
 
 public class TwoSum {
     public static int[] twoSum(int[] nums, int target) {
-        Map<Integer, Integer> map = new HashMap<>();
+        Arrays.sort(nums);
 
-        for (int i = 0; i < nums.length; i++) {
-            int desired = target - nums[i];
+        int left = 0;
+        int right = nums.length - 1;
 
-            if (map.containsKey(desired)) {
-                return new int[]{map.get(desired), i};
+        while (left < right) {
+            int sum = nums[left] + nums[right];
+
+            if (sum == target) {
+                return new int[]{left, right};
+            } else if (sum > target) {
+                right--;
+            } else {
+                left++;
             }
-
-            map.put(nums[i], i);
         }
 
         return new int[]{};
     }
 
     public static void main(String[] args) {
-        System.out.println(Arrays.toString(twoSum(new int[]{2,7,11,15}, 9)));
+        System.out.println(Arrays.toString(twoSum(new int[]{3,2,4}, 6)));
     }
 }

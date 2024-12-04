@@ -16,15 +16,26 @@ public class RemoveDuplicatesFromSortedArray {
         return res;
     }
 
+    public static int removeDuplicates2(int[] nums) {
+        int left = 1;
+        int right = 1;
+
+        while (right < nums.length) {
+            if (nums[right] != nums[right - 1]) {
+                nums[left] = nums[right];
+
+                left++;
+            }
+
+            right++;
+        }
+
+        return left;
+    }
+
     public static void main(String[] args) {
         int[] arr = new int[]{0,0,1,1,1,2,2,3,3,4};
 
-        int k = removeDuplicates(arr);
-
-        System.out.println(k);
-
-        for (int i = 0; i < k; i++) {
-            System.out.println(arr[i]);
-        }
+        System.out.println(removeDuplicates2(arr));
     }
 }
