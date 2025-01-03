@@ -73,12 +73,12 @@ public class MinHeap {
         }
 
         if (this.heap.size() == 1) {
-            return this.heap.removeLast();
+            return this.heap.remove(0);
         }
 
-        int root = this.heap.getFirst();
+        int root = this.heap.get(0);
 
-        this.heap.set(0, this.heap.removeLast());
+        this.heap.set(0, this.heap.remove(this.heap.size() - 1));
         this.heapifyDown(0);
 
         return root;
