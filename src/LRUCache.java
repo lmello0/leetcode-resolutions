@@ -2,45 +2,44 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class LRUCache {
-    private class Node {
-        public int key;
-        public int value;
+    private static class Node {
+        final int val;
+        final int key;
 
-        public Node prev;
-        public Node next;
+        Node prev = null;
+        Node next = null;
 
-        public Node(int key, int value) {
+        public Node(int key, int val) {
             this.key = key;
-            this.value = value;
-
-            this.prev = null;
-            this.next = null;
+            this.val = val;
         }
     }
 
     private final int capacity;
     private final Map<Integer, Node> cache;
 
-    private final Node head;
-    private final Node tail;
+    private final Node left;
+    private final Node right;
 
     public LRUCache(int capacity) {
         this.capacity = capacity;
         this.cache = new HashMap<>(capacity);
 
-        this.head = new Node(0, 0);
-        this.tail = new Node(0, 0);
+        this.left = new Node(0, 0);
+        this.right = new Node(0, 0);
 
-        this.head.next = this.tail;
-        this.tail.prev = this.head;
+        this.left.next = this.right;
+        this.right.prev = this.left;
     }
 
     public int get(int key) {
         if (this.cache.containsKey(key)) {
-            this.remove(this.cache.get(key));
-            this.insert(this.cache.get(key));
+            Node node = this.cache.get(key);
 
-            return this.cache.get(key).value;
+            this.remove(node);
+            this.insert(node);
+
+            return node.val;
         }
 
         return -1;
@@ -51,34 +50,38 @@ public class LRUCache {
             this.remove(this.cache.get(key));
         }
 
-        this.cache.put(key, new Node(key, value));
-        this.insert(this.cache.get(key));
+        Node node = new Node(key, value);
+        this.cache.put(key, node);
+
+        this.insert(node);
 
         if (this.cache.size() > this.capacity) {
-            Node lru = this.tail.prev;
-
+            Node lru = this.left.next;
             this.remove(lru);
             this.cache.remove(lru.key);
         }
     }
 
-    private void remove(Node removeNode) {
-        Node prev = removeNode.prev;
-        Node next = removeNode.next;
+    // remove node from list
+    private void remove(Node node) {
+        Node prev = node.prev;
+        Node next = node.next;
 
         prev.next = next;
         next.prev = prev;
     }
 
-    private void insert(Node insertNode) {
-        Node prev = this.head;
-        Node next = this.head.next;
+    // insert node at right
+    private void insert(Node node) {
+        Node prev = this.right.prev;
+        Node next = this.right;
 
-        prev.next = insertNode;
-        next.prev = insertNode;
+        prev.next = node;
+        next.prev = node;
 
-        insertNode.next = next;
-        insertNode.prev = prev;
+        node.next = next;
+        node.prev = prev;
+
     }
 
     public static void main(String[] args) {

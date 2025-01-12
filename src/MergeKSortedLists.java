@@ -31,6 +31,41 @@ public class MergeKSortedLists {
         return merged;
     }
 
+    public ListNode mergeKLists_Optimal(ListNode[] lists) {
+        if (lists.length == 0) {
+            return null;
+        }
+
+        ListNode merged = lists[0];
+        for (int i = 1; i < lists.length; i++) {
+            merged = mergeTwoLists(merged, lists[i]);
+        }
+
+        return merged;
+    }
+
+    private ListNode mergeTwoLists(ListNode l1, ListNode l2) {
+        ListNode dummy = new ListNode();
+        ListNode curr = dummy;
+
+        while (l1 != null && l2 != null) {
+            if (l1.val < l2.val) {
+                curr.next = l1;
+                l1 = l1.next;
+            } else {
+                curr.next = l2;
+                l2 = l2.next;
+            }
+
+            curr = curr.next;
+        }
+
+        curr.next = (l1 != null) ? l1 : l2;
+
+        return dummy.next;
+    }
+
+
     public static void main(String[] args) {
         ListNode[] lists = new ListNode[3];
 
@@ -49,13 +84,6 @@ public class MergeKSortedLists {
         lists[1] = list2;
         lists[2] = list3;
 
-        ListNode m = mergeKLists(lists);
-
-        ListNode curr = m;
-        while (curr != null) {
-            System.out.println(curr.val);
-
-            curr = curr.next;
-        }
+        ListNode m = new MergeKSortedLists().mergeKLists_Optimal(lists);
     }
 }
